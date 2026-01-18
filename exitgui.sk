@@ -1,0 +1,29 @@
+command /exit:
+    trigger:
+        set {_menu} to a new chest inventory with 3 rows named "&0Exit GUI"
+        set slot 22 of {_menu} to barrier block named "&cExit"
+        open {_menu} to player
+
+on inventory click:
+      name of event-inventory is "&0Exit GUI"
+      cancel event
+      if index of event-slot is 22:
+            play sound "block.note_block.pling" with volume 100 with pitch 1 to player
+            set {_confirmdelete} to a new chest inventory with 3 rows named "&cAre you sure?"
+            set slot 11 of {_confirmdelete} to red stained glass pane named "&cBack" with lore "&8Accident!"
+            set slot 15 of {_confirmdelete} to green stained glass pane named "&aConfirm" with lore "&8I know!"
+            open {_confirmdelete} to player
+            
+on inventory click:
+    name of event-inventory is "&cAre you sure?" 
+    cancel event 
+
+    if event-slot = 11:
+        cancel event
+        play sound "block.note_block.pling" with volume 100 with pitch 1 to player
+        execute player command "exit"
+
+    if event-slot = 15:
+        cancel event
+        play sound "block.note_block.pling" with volume 100 with pitch 1 to player
+        close inventory of player 
